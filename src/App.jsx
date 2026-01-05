@@ -1,14 +1,28 @@
-import OnSaleNow from "./components/onSaleNow"
-import ProductCard from "./components/ProductCard"
-import UserData from "./components/UserData"
+import { Route, Router, Routes } from "react-router-dom"
+import Home from "./pages/home.jsx"
+import Login from "./pages/login.jsx"
+import Admin from "./pages/admin.jsx"
+import Register from "./pages/register.jsx"
+import { Toaster } from "react-hot-toast"
+
 
 export default function App() {
   return (
     <>
 
-    <div className="bg-green-500  w-64">
+    <div>
+      <Toaster  position="top-center" />
+      <Routes> 
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/register" element={<Register />} />
 
-      <OnSaleNow />
+
+
+      </Routes>
+
+
 
 
 
