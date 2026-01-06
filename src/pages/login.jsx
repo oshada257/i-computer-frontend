@@ -3,14 +3,11 @@ import{ Link,useNavigate, useParams, useLocation  } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-
-
 export default function Login() {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-  
 
     async function login(e){
         e.preventDefault();
@@ -46,7 +43,11 @@ export default function Login() {
             }
         } catch (error) {
             console.error("There was an error!", error);
-            toast.error("Login failed. Please check your credentials.");
+            toast.error(
+                error?.code === "ERR_NETWORK"
+                    ? "Cannot reach the server. Please check if the API is running."
+                    : "Login failed. Please check your credentials."
+            );
         }
     }
     
@@ -58,7 +59,7 @@ export default function Login() {
 
                 <div className="text-center mb-10">
                     <h2 className="text-3xl font-bold text-white tracking-tight">Welcome </h2>
-                    <p className="text-white/60 text-sm mt-2">Please enter your details</p>
+                    <p className="text-white/65 text-sm mt-2">Please enter your details</p>
                 </div>
 
                 <form className="space-y-6" onSubmit={login}>
@@ -100,7 +101,7 @@ export default function Login() {
 
                     {/* Extra Links */}
                     <div className="text-center mt-6">
-                        <a href="#" className="text-white/50 text-xs hover:text-white transition-colors">
+                        <a href="#" className="text-white/60 text-sm hover:text-white transition-colors">
                             Forgot password?
                         </a>
                     </div>

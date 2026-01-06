@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
-import OnSaleNow from "../components/onSaleNow";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-export default function Home() {
+export default function Search() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [user, setUser] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [showResults, setShowResults] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
 
-  
   const categories = [
     { name: "Laptops", path: "/products?category=laptops" },
     { name: "Mice", path: "/products?category=mice" },
@@ -58,6 +56,18 @@ export default function Home() {
       image: "https://picsum.photos/id/6/400/300",
       price: "$89",
     },
+    {
+      id: 7,
+      name: "Laptop Stand",
+      image: "https://picsum.photos/id/7/400/300",
+      price: "$39",
+    },
+    {
+      id: 8,
+      name: "Monitor Arm",
+      image: "https://picsum.photos/id/8/400/300",
+      price: "$79",
+    },
   ];
 
   useEffect(() => {
@@ -66,6 +76,17 @@ export default function Home() {
       setUser(JSON.parse(userData));
     }
   }, []);
+
+  useEffect(() => {
+    const query = searchParams.get("query");
+    if (query) {
+      setSearchQuery(query);
+      const results = allProducts.filter((product) =>
+        product.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredProducts(results);
+    }
+  }, [searchParams]);
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -80,12 +101,19 @@ export default function Home() {
     navigate("/login");
   };
 
+  const query = searchParams.get("query") || "";
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header/Navbar */}
       <nav className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">E-Computer Store</h1>
+          <h1
+            onClick={() => navigate("/")}
+            className="text-2xl font-bold text-gray-800 cursor-pointer hover:text-blue-600"
+          >
+            E-Computer Store
+          </h1>
           <div className="flex items-center gap-8">
             <a
               href="/"
@@ -101,8 +129,12 @@ export default function Home() {
                 className="text-gray-700 hover:text-blue-600 font-medium transition-all flex items-center gap-1"
               >
                 Products
-                <span className="text-gray-700 hover:text-blue-600 font-medium transition-all flex items-center gap-1 ">
-                  <ion-icon name="chevron-down-outline"></ion-icon>
+                <span
+                  className={`transform transition-transform ${
+                    showCategoryDropdown ? "rotate-180" : ""
+                  }`}
+                >
+                  ▼
                 </span>
               </button>
               {showCategoryDropdown && (
@@ -176,54 +208,43 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <div className="bg-linear-to-r from-blue-500 to-purple-600 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-5xl font-bold mb-4">
-            Welcome to E-Computer Store
-          </h2>
-          <p className="text-xl mb-8">
-            Find the best deals on computers and electronics
-          </p>
-          <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition-all">
-            Shop Now
-          </button>
-        </div>
-      </div>
-
-      {/* On Sale Now Section */}
+      {/* Search Results Section */}
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <OnSaleNow />
-      </div>
-
-      {/* Featured Products */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold text-gray-800 mb-8">
-          Featured Products
+        <h2 className="text-3xl font-bold text-gray-800 mb-2">
+          Search Results
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <ProductCard
-            name="Gaming Laptop"
-            image="https://images.unsplash.com/photo-1698512475058-7975102960b6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Z2FtaW5nJTIwbGFwdG9wc3xlbnwwfHwwfHx8MA%3D%3D"
-            price="$1,299"
-          />
-          <ProductCard
-            name="Wireless Mouse"
-            image="https://images.unsplash.com/photo-1660491083562-d91a64d6ea9c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2lyZWxlc3MlMjBtb3VzZXxlbnwwfHwwfHx8MA%3D%3D"
-            price="$49"
-          />
-          <ProductCard
-            name="Mechanical Keyboard"
-            image="https://images.unsplash.com/photo-1626958390898-162d3577f293?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWVjaGFuaWNhbCUyMGtleWJvYXJkfGVufDB8fDB8fHww"
-            price="$129"
-          />
-          <ProductCard
-            name="Monitor 27 inch"
-            image="https://images.unsplash.com/photo-1570485071395-29b575ea3b4e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bW9uaXRvcnxlbnwwfHwwfHx8MA%3D%3D"
-            price="$349"
-          />
-        </div>
+        <p className="text-gray-600 mb-8">
+          {filteredProducts.length > 0
+            ? `Found ${filteredProducts.length} product(s) for "${query}"`
+            : `No products found for "${query}"`}
+        </p>
+
+        {filteredProducts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                name={product.name}
+                image={product.image}
+                price={product.price}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-lg text-gray-500 mb-6">
+              Try searching with different keywords
+            </p>
+            <button
+              onClick={() => navigate("/")}
+              className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-all"
+            >
+              Back to Home
+            </button>
+          </div>
+        )}
       </div>
+
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-8 mt-12">
