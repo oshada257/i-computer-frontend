@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom"
 export default function Home() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState("All");
+    
+    const categories = ["All", "Laptops", "Desktops", "Peripherals", "Components", "Monitors", "Accessories"];
 
     useEffect(() => {
         const userData = localStorage.getItem("user");
@@ -66,29 +69,58 @@ export default function Home() {
                 <OnSaleNow />
             </div>
 
+            {/* Category Filter */}
+            <div className="max-w-7xl mx-auto px-4 py-8">
+                <div className="flex flex-wrap gap-3 justify-center">
+                    {categories.map((category) => (
+                        <button
+                            key={category}
+                            onClick={() => setSelectedCategory(category)}
+                            className={`px-6 py-2 rounded-full font-semibold transition-all ${
+                                selectedCategory === category
+                                    ? "bg-blue-600 text-white shadow-lg"
+                                    : "bg-white text-gray-700 hover:bg-gray-100 shadow-md"
+                            }`}
+                        >
+                            {category}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
             {/* Featured Products */}
             <div className="max-w-7xl mx-auto px-4 py-12">
-                <h2 className="text-3xl font-bold text-gray-800 mb-8">Featured Products</h2>
+                <h2 className="text-3xl font-bold text-gray-800 mb-8">
+                    {selectedCategory === "All" ? "Featured Products" : selectedCategory}
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <ProductCard
                         name="Gaming Laptop"
                         image="https://picsum.photos/id/0/400/300"
                         price="$1,299"
+                        category="Laptops"
+                        selectedCategory={selectedCategory}
                     />
                     <ProductCard
                         name="Wireless Mouse"
                         image="https://picsum.photos/id/3/400/300"
                         price="$49"
+                        category="Peripherals"
+                        selectedCategory={selectedCategory}
                     />
                     <ProductCard
                         name="Mechanical Keyboard"
                         image="https://picsum.photos/id/4/400/300"
                         price="$129"
+                        category="Peripherals"
+                        selectedCategory={selectedCategory}
                     />
                     <ProductCard
                         name="Monitor 27 inch"
                         image="https://picsum.photos/id/5/400/300"
                         price="$349"
+                        category="Monitors"
+                        selectedCategory={selectedCategory}
                     />
                     
                 </div>

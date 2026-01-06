@@ -73,7 +73,7 @@ export default function Admin() {
                 </div>
 
                 {/* Quick Actions */}
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <div className="bg-white rounded-lg shadow-md p-6 mb-8">
                     <h2 className="text-xl font-bold text-gray-800 mb-4">Quick Actions</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <button className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-all">
@@ -86,9 +86,31 @@ export default function Admin() {
                             Manage Users
                         </button>
                         <button className="bg-orange-500 text-white px-6 py-3 rounded-lg hover:bg-orange-600 transition-all">
-                            Reports
+                            Manage Categories
                         </button>
                     </div>
+                </div>
+
+                {/* Categories Management */}
+                <div className="bg-white rounded-lg shadow-md p-6">
+                    <h2 className="text-xl font-bold text-gray-800 mb-4">Product Categories</h2>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {["Laptops", "Desktops", "Peripherals", "Components", "Monitors", "Accessories"].map((category) => (
+                            <div key={category} className="border border-gray-200 rounded-lg p-4 hover:border-blue-500 transition-all">
+                                <div className="flex justify-between items-center">
+                                    <span className="font-semibold text-gray-700">{category}</span>
+                                    <button className="text-blue-500 hover:text-blue-700">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <button className="mt-6 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-all">
+                        + Add New Category
+                    </button>
                 </div>
             </div>
         </div>
