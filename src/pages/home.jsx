@@ -11,6 +11,7 @@ export default function Home() {
   const [showResults, setShowResults] = useState(false);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
 
+  
   const categories = [
     { name: "Laptops", path: "/products?category=laptops" },
     { name: "Mice", path: "/products?category=mice" },

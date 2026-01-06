@@ -10,7 +10,6 @@ export default function Rejister() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-
     async function handleRegister(e) {
         e.preventDefault();
         

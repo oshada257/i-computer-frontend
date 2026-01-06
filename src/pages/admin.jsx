@@ -9,7 +9,7 @@ export default function Admin() {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
-    image: "",
+    image: "", 
     description: "",
     category: "",
   });

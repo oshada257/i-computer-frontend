@@ -10,7 +10,7 @@ export default function OnSaleNow() {
           <ProductCard
             name="Laptop Pro"
             image="https://picsum.photos/id/1/400/300"
-            price="$999"
+            price="$999" 
           />
 
           <ProductCard

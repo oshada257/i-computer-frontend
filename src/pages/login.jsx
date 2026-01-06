@@ -3,14 +3,11 @@ import{ Link,useNavigate, useParams, useLocation  } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-
-
 export default function Login() {
 
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-  
 
     async function login(e){
         e.preventDefault();
