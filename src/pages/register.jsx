@@ -2,8 +2,10 @@ import Login from "./login"
 import { useState } from "react"
 import axios from "axios"
 import { toast } from "react-hot-toast"
+import { useNavigate } from "react-router-dom"
 export default function Rejister() {
 
+    const navigate = useNavigate();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -26,9 +28,12 @@ export default function Rejister() {
                 password: password
             });
             console.log(response.data);
-            toast.success("Registration successful!");
+            toast.success("Registration successful! Redirecting to login...");
             
-            // You can redirect the user or perform other actions here
+            // Redirect to login page after successful registration
+            setTimeout(() => {
+                navigate("/login");
+            }, 1500); // Wait 1.5 seconds to show success message
         } catch (error) {
             console.error("There was an error!", error);
             toast.error("Registration failed. Please try again.");
