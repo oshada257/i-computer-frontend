@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import OnSaleNow from "../components/onSaleNow";
+import CartIcon from "../components/CartIcon";
 import { useNavigate } from "react-router-dom";
 import api from "../api/client";
+import { useCart } from "../context/CartContext";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -93,6 +96,11 @@ export default function Home() {
     navigate("/login");
   };
 
+  const handleAddToCart = (productId) => {
+    const product = products.find(p => p.productId === productId);
+    addToCart(product, navigate);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white shadow-md">
@@ -174,6 +182,7 @@ export default function Home() {
           <div className="flex items-center gap-4">
             {user ? (
               <>
+                <CartIcon />
                 <button
                   onClick={() => navigate("/orders/my-orders")}
                   className="text-gray-700 hover:text-blue-600 font-medium transition-all"
@@ -254,6 +263,7 @@ export default function Home() {
                     brand={product.brand}
                     model={product.model}
                     onClick={(id) => navigate(`/product/${id}`)}
+                    onAddToCart={handleAddToCart}
                     onBuyNow={() =>
                       navigate("/checkout", {
                         state: {

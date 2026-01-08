@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/client";
+import { toast } from "react-hot-toast";
+import { useCart } from "../context/CartContext";
+import CartIcon from "../components/CartIcon";
 
 export default function ProductDetails() {
   const { productId } = useParams();
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -36,6 +40,10 @@ export default function ProductDetails() {
     localStorage.removeItem("user");
     setUser(null);
     navigate("/login");
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product, navigate);
   };
 
   if (loading) {
@@ -82,7 +90,7 @@ export default function ProductDetails() {
               Home
             </a>
             <a
-              href="/products"
+              href="/"
               className="text-gray-700 hover:text-blue-600 font-medium transition-all"
             >
               Products
@@ -91,6 +99,7 @@ export default function ProductDetails() {
           <div className="flex items-center gap-4">
             {user ? (
               <>
+                <CartIcon />
                 <span className="text-gray-600">
                   Welcome, {user.firstName || user.fullName || user.email}
                 </span>
@@ -221,7 +230,10 @@ export default function ProductDetails() {
               )}
 
               <div className="mt-auto">
-                <button className="w-full bg-blue-600 text-white py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-all mb-3">
+                <button 
+                  onClick={handleAddToCart}
+                  className="w-full bg-blue-600 text-white py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-all mb-3"
+                >
                   Add to Cart
                 </button>
                 <button 

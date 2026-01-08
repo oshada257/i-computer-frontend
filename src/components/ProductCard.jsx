@@ -9,6 +9,7 @@ export default function ProductCard({
   brand,
   model,
   onBuyNow,
+  onAddToCart,
   onClick
 }) {
   // Get the first image from the array or use default
@@ -49,7 +50,7 @@ export default function ProductCard({
         )}
       </div>
       
-      <div className="p-4 flex flex-col flex-grow">
+      <div className="p-4 flex flex-col grow">
         <h3 className="text-lg font-semibold text-gray-800 mb-1 h-14 line-clamp-2">
           {name}
         </h3>
@@ -79,15 +80,26 @@ export default function ProductCard({
           )}
         </div>
         
-        <button 
-          onClick={(e) => {
-            e.stopPropagation();
-            onBuyNow && onBuyNow(productId);
-          }}
-          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-all"
-        >
-          Buy Now
-        </button>
+        <div className="flex gap-2">
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToCart && onAddToCart(productId);
+            }}
+            className="flex-1 bg-gray-100 text-gray-800 py-2 rounded-lg hover:bg-gray-200 transition-all border border-gray-300"
+          >
+            Add to Cart
+          </button>
+          <button 
+            onClick={(e) => {
+              e.stopPropagation();
+              onBuyNow && onBuyNow(productId);
+            }}
+            className="flex-1 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-all"
+          >
+            Buy Now
+          </button>
+        </div>
       </div>
     </div>
   )

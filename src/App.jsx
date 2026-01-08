@@ -7,13 +7,15 @@ import Register from "./pages/register.jsx"
 import ProductDetails from "./pages/productDetails.jsx"
 import Checkout from "./pages/checkout.jsx"
 import MyOrders from "./pages/myOrders.jsx"
+import Cart from "./pages/cart.jsx"
 import { Toaster } from "react-hot-toast"
+import { CartProvider } from "./context/CartContext.jsx"
 
 
 export default function App() {
   return (
     <>
-
+    <CartProvider>
     <div>
       <Toaster  position="top-center" />
       <Routes> 
@@ -25,22 +27,10 @@ export default function App() {
         <Route path="/product/:productId" element={<ProductDetails />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/orders/my-orders" element={<MyOrders />} />
-      
-
-
+        <Route path="/cart" element={<Cart />} />
       </Routes>
-
-
-
-
-
     </div>
-
-
-
-
+    </CartProvider>
     </>
-    
-    
   )
 }
