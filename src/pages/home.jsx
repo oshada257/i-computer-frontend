@@ -16,7 +16,6 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [displayedProducts, setDisplayedProducts] = useState([]);
 
-  
   const categories = [
     { name: "All Products", value: "all" },
     { name: "Laptops", value: "laptops" },
@@ -37,26 +36,26 @@ export default function Home() {
 
   useEffect(() => {
     let filtered = products;
-    
-    // Apply category filter
+
     if (selectedCategory !== "all") {
-      filtered = filtered.filter(product => 
-        product.category.toLowerCase() === selectedCategory.toLowerCase()
+      filtered = filtered.filter(
+        (product) =>
+          product.category.toLowerCase() === selectedCategory.toLowerCase()
       );
     }
-    
-    // Apply search filter
+
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase().trim();
-      filtered = filtered.filter(product => 
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query) ||
-        product.category.toLowerCase().includes(query) ||
-        product.brand.toLowerCase().includes(query) ||
-        product.model.toLowerCase().includes(query)
+      filtered = filtered.filter(
+        (product) =>
+          product.name.toLowerCase().includes(query) ||
+          product.description.toLowerCase().includes(query) ||
+          product.category.toLowerCase().includes(query) ||
+          product.brand.toLowerCase().includes(query) ||
+          product.model.toLowerCase().includes(query)
       );
     }
-    
+
     setDisplayedProducts(filtered);
   }, [products, selectedCategory, searchQuery]);
 
@@ -77,7 +76,7 @@ export default function Home() {
   };
 
   const handleSearch = (e) => {
-    if (e.key === 'Enter' && searchQuery.trim()) {
+    if (e.key === "Enter" && searchQuery.trim()) {
       // Optional: could still navigate to dedicated search page if needed
       // navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
     }
@@ -96,7 +95,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header/Navbar */}
       <nav className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-800">E-Computer Store</h1>
@@ -114,7 +112,8 @@ export default function Home() {
                 onMouseLeave={() => setShowCategoryDropdown(false)}
                 className="text-gray-700 hover:text-blue-600 font-medium transition-all flex items-center gap-1"
               >
-                {categories.find(cat => cat.value === selectedCategory)?.name || "Products"}
+                {categories.find((cat) => cat.value === selectedCategory)
+                  ?.name || "Products"}
                 <span className="text-gray-700 hover:text-blue-600 font-medium transition-all flex items-center gap-1 ">
                   <ion-icon name="chevron-down-outline"></ion-icon>
                 </span>
@@ -141,12 +140,16 @@ export default function Home() {
                 </div>
               )}
             </div>
-            <a
-              href="/contact"
+            <button
+              onClick={() =>
+                document
+                  .getElementById("footer")
+                  .scrollIntoView({ behavior: "smooth" })
+              }
               className="text-gray-700 hover:text-blue-600 font-medium transition-all"
             >
               Contact Us
-            </a>
+            </button>
           </div>
           <div className="flex items-center gap-4">
             <div className="relative">
@@ -177,9 +180,7 @@ export default function Home() {
                 >
                   My Orders
                 </button>
-                <span className="text-gray-600">
-                  Welcome, {user.firstName}
-                </span>
+                <span className="text-gray-600">Welcome, {user.firstName}</span>
                 <button
                   onClick={handleLogout}
                   className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all"
@@ -199,7 +200,6 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <div className="bg-linear-to-r from-blue-500 to-purple-600 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-5xl font-bold mb-4">
@@ -208,109 +208,211 @@ export default function Home() {
           <p className="text-xl mb-8">
             Find the best deals on computers and electronics
           </p>
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-800">
-            {searchQuery.trim() 
-              ? `Search Results for "${searchQuery}"` 
-              : selectedCategory === "all" 
-                ? "Featured Products" 
-                : `${categories.find(cat => cat.value === selectedCategory)?.name || "Products"}`
-            }
-          </h2>
-          <div className="text-sm text-gray-600">
-            Showing {displayedProducts.length} product{displayedProducts.length !== 1 ? 's' : ''}
-            {searchQuery.trim() && selectedCategory !== "all" && (
-              <span className="block text-xs text-gray-500 mt-1">
-                in {categories.find(cat => cat.value === selectedCategory)?.name}
-              </span>
+          <div className="max-w-7xl mx-auto px-4 py-12">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-800">
+                {searchQuery.trim()
+                  ? `Search Results for "${searchQuery}"`
+                  : selectedCategory === "all"
+                  ? "Featured Products"
+                  : `${
+                      categories.find((cat) => cat.value === selectedCategory)
+                        ?.name || "Products"
+                    }`}
+              </h2>
+              <div className="text-sm text-gray-600">
+                Showing {displayedProducts.length} product
+                {displayedProducts.length !== 1 ? "s" : ""}
+                {searchQuery.trim() && selectedCategory !== "all" && (
+                  <span className="block text-xs text-gray-500 mt-1">
+                    in{" "}
+                    {
+                      categories.find((cat) => cat.value === selectedCategory)
+                        ?.name
+                    }
+                  </span>
+                )}
+              </div>
+            </div>
+            {loading ? (
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading products...</p>
+              </div>
+            ) : displayedProducts.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {displayedProducts.slice(0, 12).map((product) => (
+                  <ProductCard
+                    key={product._id}
+                    productId={product.productId}
+                    name={product.name}
+                    description={product.description}
+                    image={product.image}
+                    price={product.price}
+                    labelledPrice={product.labelledPrice}
+                    category={product.category}
+                    brand={product.brand}
+                    model={product.model}
+                    onClick={(id) => navigate(`/product/${id}`)}
+                    onBuyNow={() =>
+                      navigate("/checkout", {
+                        state: {
+                          product: product,
+                          quantity: 1,
+                        },
+                      })
+                    }
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <div className="text-gray-400 mb-4">
+                  <svg
+                    className="mx-auto h-16 w-16"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </div>
+                <p className="text-gray-600 text-lg mb-2">
+                  {searchQuery.trim()
+                    ? `No products found for "${searchQuery}"`
+                    : `No products found in ${
+                        categories
+                          .find((cat) => cat.value === selectedCategory)
+                          ?.name.toLowerCase() || "this category"
+                      }`}
+                </p>
+                <p className="text-sm text-gray-500 mb-4">
+                  {searchQuery.trim()
+                    ? "Try different keywords or check your spelling"
+                    : "Try selecting a different category or check back later!"}
+                </p>
+                <div className="flex gap-3 justify-center">
+                  {searchQuery.trim() && (
+                    <button
+                      onClick={clearSearch}
+                      className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-all"
+                    >
+                      Clear Search
+                    </button>
+                  )}
+                  <button
+                    onClick={() => {
+                      setSelectedCategory("all");
+                      setSearchQuery("");
+                    }}
+                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all"
+                  >
+                    View All Products
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         </div>
-        {loading ? (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading products...</p>
-          </div>
-        ) : displayedProducts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {displayedProducts.slice(0, 12).map((product) => (
-              <ProductCard
-                key={product._id}
-                productId={product.productId}
-                name={product.name}
-                description={product.description}
-                image={product.image}
-                price={product.price}
-                labelledPrice={product.labelledPrice}
-                category={product.category}
-                brand={product.brand}
-                model={product.model}
-                onClick={(id) => navigate(`/product/${id}`)}
-                onBuyNow={() => navigate("/checkout", { 
-                  state: { 
-                    product: product, 
-                    quantity: 1 
-                  } 
-                })}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12">
-            <div className="text-gray-400 mb-4">
-              <svg className="mx-auto h-16 w-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
-            <p className="text-gray-600 text-lg mb-2">
-              {searchQuery.trim() 
-                ? `No products found for "${searchQuery}"` 
-                : `No products found in ${categories.find(cat => cat.value === selectedCategory)?.name.toLowerCase() || "this category"}`
-              }
-            </p>
-            <p className="text-sm text-gray-500 mb-4">
-              {searchQuery.trim() 
-                ? "Try different keywords or check your spelling" 
-                : "Try selecting a different category or check back later!"
-              }
-            </p>
-            <div className="flex gap-3 justify-center">
-              {searchQuery.trim() && (
-                <button
-                  onClick={clearSearch}
-                  className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-all"
-                >
-                  Clear Search
-                </button>
-              )}
-              <button
-                onClick={() => {setSelectedCategory("all"); setSearchQuery("");}}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all"
-              >
-                View All Products
-              </button>
-            </div>
-          </div>
-        )}
-      </div>    <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition-all">
-            Shop Now
-          </button>
-        </div>
       </div>
 
-      {/* On Sale Now Section */}
       <div className="max-w-7xl mx-auto px-4 py-12">
         <OnSaleNow />
       </div>
 
-      {/* Featured Products */}
-      
+      <footer id="footer" className="bg-gray-800 text-white py-12 mt-12">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4">E-Computer Store</h3>
+              <p className="text-gray-300 mb-4">
+                Your trusted destination for quality computers and electronics.
+              </p>
+            </div>
 
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8 mt-12">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <p>&copy; 2026 E-Computer Store. All rights reserved.</p>
+            <div>
+              <h3 className="text-xl font-bold mb-4">Contact Us</h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <ion-icon
+                    name="call-outline"
+                    style={{ fontSize: "20px" }}
+                  ></ion-icon>
+                  <a
+                    href="tel:+9412345678"
+                    className="text-gray-300 hover:text-white transition-all"
+                  >
+                    +94 71 234 5678
+                  </a>
+                </div>
+                <div className="flex items-center gap-3">
+                  <ion-icon
+                    name="mail-outline"
+                    style={{ fontSize: "20px" }}
+                  ></ion-icon>
+                  <a
+                    href="mailto:info@ecomputerstore.com"
+                    className="text-gray-300 hover:text-white transition-all"
+                  >
+                    info@ecomputerstore.com
+                  </a>
+                </div>
+                <div className="flex items-center gap-3">
+                  <ion-icon
+                    name="logo-whatsapp"
+                    style={{ fontSize: "20px" }}
+                  ></ion-icon>
+                  <a
+                    href="https://wa.me/0712345678"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-300 hover:text-white transition-all"
+                  >
+                    WhatsApp: +94 71 234 5678
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-4">Follow Us</h3>
+              <div className="flex gap-4">
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-blue-500 transition-all"
+                >
+                  <ion-icon
+                    name="logo-facebook"
+                    style={{ fontSize: "32px" }}
+                  ></ion-icon>
+                </a>
+                <a
+                  href="http://tiktok.lk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-black transition-all"
+                >
+                  <ion-icon
+                    name="logo-tiktok"
+                    style={{ fontSize: "32px" }}
+                  ></ion-icon>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-700 pt-6 text-center">
+            <p className="text-gray-400">
+              &copy; 2026 E-Computer Store. All rights reserved.
+            </p>
+          </div>
         </div>
       </footer>
     </div>
