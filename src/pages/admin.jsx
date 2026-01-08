@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import api from "../api/client";
 import AdminStats from "../components/AdminStats";
 import QuickActions from "../components/QuickActions";
 import ProductList from "../components/ProductList";
 import AddProductModal from "../components/AddProductModal";
+import EditProductModal from "../components/EditProductModal";
 
 export default function Admin() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showAddProductModal, setShowAddProductModal] = useState(false);
+  const [showEditProductModal, setShowEditProductModal] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -83,17 +87,37 @@ export default function Admin() {
         },
       });
       await fetchProducts();
-      alert("Product deleted successfully!");
+      toast.success("Product deleted successfully!", { icon: "🗑️" });
     } catch (error) {
       console.error("Error deleting product:", error);
-      alert("Failed to delete product!");
+      toast.error("Failed to delete product!");
     }
   };
 
-  // Edit product (simplified - just navigate to edit page or show modal)
+  // Edit product - open modal with product data
   const handleEditProduct = (product) => {
-    // For now, just show an alert. You can implement edit modal later
-    alert(`Edit functionality for ${product.name} will be implemented soon.`);
+    setEditingProduct(product);
+    setShowEditProductModal(true);
+  };
+
+  // Toggle product on sale status
+  const handleToggleSale = async (productId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await api.put(`/products/${productId}/toggle-sale`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      await fetchProducts();
+      toast.success(response.data.message, {
+        icon: response.data.isOnSale ? "🔥" : "✅",
+        duration: 2000
+      });
+    } catch (error) {
+      console.error("Error toggling sale status:", error);
+      toast.error("Failed to update sale status!");
+    }
   };
 
   const handleLogout = () => {
@@ -153,6 +177,7 @@ export default function Admin() {
           onSearch={handleSearch}
           onEdit={handleEditProduct}
           onDelete={handleDeleteProduct}
+          onToggleSale={handleToggleSale}
         />
       </div>
 
@@ -161,6 +186,17 @@ export default function Admin() {
         isOpen={showAddProductModal}
         onClose={() => setShowAddProductModal(false)}
         onSuccess={fetchProducts}
+      />
+
+      {/* Edit Product Modal */}
+      <EditProductModal
+        isOpen={showEditProductModal}
+        onClose={() => {
+          setShowEditProductModal(false);
+          setEditingProduct(null);
+        }}
+        onSuccess={fetchProducts}
+        product={editingProduct}
       />
     </div>
   );

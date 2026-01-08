@@ -1,16 +1,42 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import api from "../api/client";
+import Footer from "../components/Footer";
+import { useCart } from "../context/CartContext";
 
 export default function Checkout() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { clearCart } = useCart();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   
-  // Get product data from navigation state
-  const product = location.state?.product;
-  const quantity = location.state?.quantity || 1;
+  // Get product data from navigation state - support both single product and cart items
+  const singleProduct = location.state?.product;
+  const singleQuantity = location.state?.quantity || 1;
+  const cartItems = location.state?.cartItems;
+  
+  // Determine if this is a cart checkout or single product checkout
+  const isCartCheckout = cartItems && cartItems.length > 0;
+  
+  // Build items array for display and order
+  const orderItems = isCartCheckout 
+    ? cartItems.map(item => ({
+        productId: item.productId,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        image: item.image
+      }))
+    : singleProduct 
+      ? [{
+          productId: singleProduct.productId,
+          name: singleProduct.name,
+          price: singleProduct.price,
+          quantity: singleQuantity,
+          image: singleProduct.image
+        }]
+      : [];
 
   const [orderData, setOrderData] = useState({
     customerInfo: {
@@ -51,10 +77,10 @@ export default function Checkout() {
     }));
 
     // Redirect if no product data
-    if (!product) {
+    if (!singleProduct && (!cartItems || cartItems.length === 0)) {
       navigate("/");
     }
-  }, [navigate, product]);
+  }, [navigate, singleProduct, cartItems]);
 
   const handleInputChange = (section, field, value) => {
     setOrderData(prev => ({
@@ -73,9 +99,9 @@ export default function Checkout() {
   };
 
   const calculateTotals = () => {
-    if (!product) return { subtotal: 0, tax: 0, shipping: 0, total: 0 };
+    if (orderItems.length === 0) return { subtotal: 0, tax: 0, shipping: 0, total: 0 };
     
-    const subtotal = product.price * quantity;
+    const subtotal = orderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const tax = subtotal * 0.1; // 10% tax
     const shipping = subtotal > 5000 ? 0 : 500; // Free shipping above Rs. 5000
     const total = subtotal + tax + shipping;
@@ -106,14 +132,14 @@ export default function Checkout() {
       const orderPayload = {
         customerInfo: orderData.customerInfo,
         shippingAddress: orderData.shippingAddress,
-        items: [{
-          productId: product.productId,
-          productName: product.name,
-          quantity: quantity,
-          price: product.price,
-          totalPrice: product.price * quantity,
-          image: product.image && product.image[0] ? product.image[0] : "/images/default-product.png"
-        }],
+        items: orderItems.map(item => ({
+          productId: item.productId,
+          productName: item.name,
+          quantity: item.quantity,
+          price: item.price,
+          totalPrice: item.price * item.quantity,
+          image: item.image && item.image[0] ? item.image[0] : "/images/default-product.png"
+        })),
         orderSummary: {
           subtotal: totals.subtotal,
           tax: totals.tax,
@@ -133,6 +159,11 @@ export default function Checkout() {
         }
       });
 
+      // Clear cart if this was a cart checkout
+      if (isCartCheckout) {
+        clearCart();
+      }
+
       alert("Order placed successfully!");
       navigate("/orders/my-orders");
       
@@ -144,7 +175,7 @@ export default function Checkout() {
     }
   };
 
-  if (!product || !user) {
+  if (orderItems.length === 0 || !user) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <p className="text-xl text-gray-600">Loading...</p>
@@ -153,9 +184,15 @@ export default function Checkout() {
   }
 
   const totals = calculateTotals();
-  const imageUrl = product.image && product.image[0] 
-    ? (product.image[0].startsWith('/images') ? `http://localhost:3000${product.image[0]}` : product.image[0])
-    : '/images/default-product.png';
+
+  // Helper function to get image URL
+  const getImageUrl = (image) => {
+    if (!image || (Array.isArray(image) && image.length === 0)) {
+      return '/images/default-product.png';
+    }
+    const imgPath = Array.isArray(image) ? image[0] : image;
+    return imgPath.startsWith('/images') ? `http://localhost:3000${imgPath}` : imgPath;
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -185,10 +222,10 @@ export default function Checkout() {
       {/* Checkout Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         <button
-          onClick={() => navigate(`/product/${product.productId}`)}
+          onClick={() => navigate(isCartCheckout ? "/cart" : "/")}
           className="text-blue-600 hover:text-blue-700 mb-6 flex items-center gap-2"
         >
-          ← Back to Product
+          ← {isCartCheckout ? "Back to Cart" : "Back to Shopping"}
         </button>
 
         <h1 className="text-3xl font-bold text-gray-800 mb-8">Checkout</h1>
@@ -337,17 +374,21 @@ export default function Checkout() {
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Order Summary</h2>
             
             {/* Product Details */}
-            <div className="flex items-center gap-4 mb-6 p-4 border border-gray-200 rounded-lg">
-              <img
-                src={imageUrl}
-                alt={product.name}
-                className="w-16 h-16 object-cover rounded"
-              />
-              <div className="flex-1">
-                <h3 className="font-semibold text-gray-800">{product.name}</h3>
-                <p className="text-gray-600">Qty: {quantity}</p>
-                <p className="text-blue-600 font-semibold">Rs. {product.price.toFixed(2)} each</p>
-              </div>
+            <div className="space-y-4 mb-6 max-h-64 overflow-y-auto">
+              {orderItems.map((item, index) => (
+                <div key={index} className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg">
+                  <img
+                    src={getImageUrl(item.image)}
+                    alt={item.name}
+                    className="w-16 h-16 object-cover rounded"
+                  />
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-800">{item.name}</h3>
+                    <p className="text-gray-600">Qty: {item.quantity}</p>
+                    <p className="text-blue-600 font-semibold">Rs. {item.price.toFixed(2)} each</p>
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Price Breakdown */}
@@ -384,8 +425,11 @@ export default function Checkout() {
               </p>
             )}
           </div>
+         
         </div>
       </div>
+       <Footer />
     </div>
+   
   );
 }

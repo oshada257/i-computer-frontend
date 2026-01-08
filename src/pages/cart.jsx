@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { useCart } from "../context/CartContext";
 import CartItem from "../components/CartItem";
 import CartSummary from "../components/CartSummary";
+import Footer from "../components/Footer";
 
 export default function Cart() {
   const navigate = useNavigate();
@@ -116,6 +117,7 @@ export default function Cart() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

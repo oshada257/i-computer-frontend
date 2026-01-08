@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import OnSaleNow from "../components/onSaleNow";
 import CartIcon from "../components/CartIcon";
+import Footer from "../components/Footer";
 import { useNavigate } from "react-router-dom";
 import api from "../api/client";
 import { useCart } from "../context/CartContext";
+import { toast } from "react-hot-toast";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -99,6 +101,23 @@ export default function Home() {
   const handleAddToCart = (productId) => {
     const product = products.find(p => p.productId === productId);
     addToCart(product, navigate);
+  };
+
+  const handleBuyNow = (product) => {
+    if (!user) {
+      toast.error("Please login to purchase products", {
+        icon: "🔒",
+        duration: 2000
+      });
+      setTimeout(() => navigate("/login"), 1500);
+      return;
+    }
+    navigate("/checkout", {
+      state: {
+        product: product,
+        quantity: 1,
+      },
+    });
   };
 
   return (
@@ -217,6 +236,9 @@ export default function Home() {
           <p className="text-xl mb-8">
             Find the best deals on computers and electronics
           </p>
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <OnSaleNow />
+      </div>
           <div className="max-w-7xl mx-auto px-4 py-12">
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-3xl font-bold text-gray-800">
@@ -264,14 +286,7 @@ export default function Home() {
                     model={product.model}
                     onClick={(id) => navigate(`/product/${id}`)}
                     onAddToCart={handleAddToCart}
-                    onBuyNow={() =>
-                      navigate("/checkout", {
-                        state: {
-                          product: product,
-                          quantity: 1,
-                        },
-                      })
-                    }
+                    onBuyNow={() => handleBuyNow(product)}
                   />
                 ))}
               </div>
@@ -331,100 +346,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <OnSaleNow />
-      </div>
-
-      <footer id="footer" className="bg-gray-800 text-white py-12 mt-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">E-Computer Store</h3>
-              <p className="text-gray-300 mb-4">
-                Your trusted destination for quality computers and electronics.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-bold mb-4">Contact Us</h3>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <ion-icon
-                    name="call-outline"
-                    style={{ fontSize: "20px" }}
-                  ></ion-icon>
-                  <a
-                    href="tel:+9412345678"
-                    className="text-gray-300 hover:text-white transition-all"
-                  >
-                    +94 71 234 5678
-                  </a>
-                </div>
-                <div className="flex items-center gap-3">
-                  <ion-icon
-                    name="mail-outline"
-                    style={{ fontSize: "20px" }}
-                  ></ion-icon>
-                  <a
-                    href="mailto:info@ecomputerstore.com"
-                    className="text-gray-300 hover:text-white transition-all"
-                  >
-                    info@ecomputerstore.com
-                  </a>
-                </div>
-                <div className="flex items-center gap-3">
-                  <ion-icon
-                    name="logo-whatsapp"
-                    style={{ fontSize: "20px" }}
-                  ></ion-icon>
-                  <a
-                    href="https://wa.me/0712345678"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-white transition-all"
-                  >
-                    WhatsApp: +94 71 234 5678
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-bold mb-4">Follow Us</h3>
-              <div className="flex gap-4">
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-blue-500 transition-all"
-                >
-                  <ion-icon
-                    name="logo-facebook"
-                    style={{ fontSize: "32px" }}
-                  ></ion-icon>
-                </a>
-                <a
-                  href="http://tiktok.lk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-black transition-all"
-                >
-                  <ion-icon
-                    name="logo-tiktok"
-                    style={{ fontSize: "32px" }}
-                  ></ion-icon>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-700 pt-6 text-center">
-            <p className="text-gray-400">
-              &copy; 2026 E-Computer Store. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

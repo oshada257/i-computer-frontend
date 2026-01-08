@@ -4,6 +4,8 @@ import api from "../api/client";
 import { toast } from "react-hot-toast";
 import { useCart } from "../context/CartContext";
 import CartIcon from "../components/CartIcon";
+import Footer from "../components/Footer";
+
 
 export default function ProductDetails() {
   const { productId } = useParams();
@@ -44,6 +46,23 @@ export default function ProductDetails() {
 
   const handleAddToCart = () => {
     addToCart(product, navigate);
+  };
+
+  const handleBuyNow = () => {
+    if (!user) {
+      toast.error("Please login to purchase products", {
+        icon: "🔒",
+        duration: 2000
+      });
+      setTimeout(() => navigate("/login"), 1500);
+      return;
+    }
+    navigate("/checkout", { 
+      state: { 
+        product: product, 
+        quantity: 1 
+      } 
+    });
   };
 
   if (loading) {
@@ -237,12 +256,7 @@ export default function ProductDetails() {
                   Add to Cart
                 </button>
                 <button 
-                  onClick={() => navigate("/checkout", { 
-                    state: { 
-                      product: product, 
-                      quantity: 1 
-                    } 
-                  })}
+                  onClick={handleBuyNow}
                   className="w-full bg-green-600 text-white py-4 rounded-lg text-lg font-semibold hover:bg-green-700 transition-all"
                 >
                   Buy Now
@@ -273,12 +287,7 @@ export default function ProductDetails() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8 mt-12">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <p>&copy; 2026 E-Computer Store. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

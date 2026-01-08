@@ -4,7 +4,8 @@ export default function ProductList({
   searchQuery, 
   onSearch, 
   onEdit, 
-  onDelete 
+  onDelete,
+  onToggleSale 
 }) {
   if (products.length === 0) {
     return null;
@@ -62,6 +63,9 @@ export default function ProductList({
                 Visible
               </th>
               <th className="text-left py-3 px-4 font-medium text-gray-700">
+                On Sale
+              </th>
+              <th className="text-left py-3 px-4 font-medium text-gray-700">
                 Actions
               </th>
             </tr>
@@ -94,6 +98,18 @@ export default function ProductList({
                   <span className={`inline-block w-3 h-3 rounded-full ${
                     product.isVisible ? 'bg-green-500' : 'bg-red-500'
                   }`}></span>
+                </td>
+                <td className="py-3 px-4">
+                  <button
+                    onClick={() => onToggleSale(product.productId)}
+                    className={`px-3 py-1 rounded text-sm font-medium transition-all ${
+                      product.isOnSale 
+                        ? 'bg-red-500 text-white hover:bg-red-600' 
+                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    }`}
+                  >
+                    {product.isOnSale ? '🔥 On Sale' : 'Add to Sale'}
+                  </button>
                 </td>
                 <td className="py-3 px-4">
                   <div className="flex gap-2">
