@@ -8,12 +8,10 @@ export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
 
-  // Load cart from localStorage on mount
   useEffect(() => {
     loadCart();
   }, []);
 
-  // Update cart count whenever cartItems change
   useEffect(() => {
     const totalCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
     setCartCount(totalCount);
@@ -30,7 +28,6 @@ export function CartProvider({ children }) {
   };
 
   const addToCart = (product, navigate) => {
-    // Check if user is logged in
     const user = localStorage.getItem("user");
     if (!user) {
       toast.error("Please login to add items to cart", {
@@ -67,7 +64,6 @@ export function CartProvider({ children }) {
 
     saveCart(existingCart);
 
-    // Show success toast with View Cart button
     toast.success(
       (t) => (
         <div className="flex items-center gap-3">
@@ -133,8 +129,8 @@ export function CartProvider({ children }) {
 
   const getTotalWithTax = () => {
     const subtotal = getTotalPrice();
-    const tax = subtotal * 0.1; // 10% tax
-    const shipping = subtotal > 5000 ? 0 : 500; // Free shipping above Rs. 5000
+    const tax = subtotal * 0.1; 
+    const shipping = subtotal > 5000 ? 0 : 500; 
     return subtotal + tax + shipping;
   };
 
@@ -155,7 +151,6 @@ export function CartProvider({ children }) {
   );
 }
 
-// Custom hook to use cart context
 export function useCart() {
   const context = useContext(CartContext);
   if (!context) {

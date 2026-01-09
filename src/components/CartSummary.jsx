@@ -4,8 +4,8 @@ export default function CartSummary({ onCheckout }) {
   const { cartItems, getTotalPrice, clearCart } = useCart();
 
   const subtotal = getTotalPrice();
-  const tax = subtotal * 0.1; // 10% tax
-  const shipping = subtotal > 5000 ? 0 : 500; // Free shipping above Rs. 5000
+  const tax = subtotal * 0.1; 
+  const shipping = subtotal > 5000 ? 0 : 500; 
   const total = subtotal + tax + shipping;
 
   return (
@@ -55,7 +55,7 @@ export default function CartSummary({ onCheckout }) {
         Clear Cart
       </button>
 
-      {/* Security badges */}
+      {}
       <div className="mt-4 pt-4 border-t border-gray-200">
         <div className="flex items-center justify-center gap-2 text-gray-500 text-xs">
           <ion-icon name="shield-checkmark-outline"></ion-icon>

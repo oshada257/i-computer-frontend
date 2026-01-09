@@ -13,20 +13,20 @@ export default function CartItem({ item }) {
 
   return (
     <div className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-      {/* Product Image */}
+      {}
       <img
         src={getImageUrl(item.image)}
         alt={item.name}
         className="w-20 h-20 object-cover rounded-md"
       />
 
-      {/* Product Info */}
+      {}
       <div className="flex-1 min-w-0">
         <h3 className="font-semibold text-gray-800 truncate">{item.name}</h3>
         <p className="text-blue-600 font-bold">Rs.{item.price.toFixed(2)}</p>
       </div>
 
-      {/* Quantity Controls */}
+      {}
       <div className="flex items-center gap-2">
         <button
           onClick={() => updateQuantity(item.productId, item.quantity - 1)}
@@ -43,7 +43,7 @@ export default function CartItem({ item }) {
         </button>
       </div>
 
-      {/* Item Total & Remove */}
+      {}
       <div className="text-right min-w-25">
         <p className="font-bold text-gray-800">
           Rs.{(item.price * item.quantity).toFixed(2)}

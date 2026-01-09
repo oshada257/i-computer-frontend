@@ -18,8 +18,7 @@ export default function ImageUpload({ onImageUploaded, multiple = false }) {
       const formData = new FormData();
 
       if (multiple) {
-        // Upload multiple images
-        Array.from(files).forEach(file => {
+          Array.from(files).forEach(file => {
           formData.append('images', file);
         });
 
@@ -39,7 +38,6 @@ export default function ImageUpload({ onImageUploaded, multiple = false }) {
           onImageUploaded(response.data.imagePaths);
         }
       } else {
-        // Upload single image
         formData.append('image', files[0]);
 
         const response = await axios.post(

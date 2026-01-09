@@ -132,7 +132,7 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }) {
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Add New Product</h2>
 
         <div className="space-y-4">
-          {/* Product ID */}
+          {}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
               Product ID <span className="text-red-500">*</span>
@@ -148,7 +148,7 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }) {
             />
           </div>
 
-          {/* Product Name */}
+          {}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
               Product Name <span className="text-red-500">*</span>
@@ -164,7 +164,7 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }) {
             />
           </div>
 
-          {/* Description */}
+          {}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
               Description <span className="text-red-500">*</span>
@@ -180,7 +180,7 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }) {
             />
           </div>
 
-          {/* Alternative Names */}
+          {}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Alternative Names</label>
             {formData.altName.map((altName, index) => (
@@ -210,7 +210,7 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }) {
             </button>
           </div>
 
-          {/* Price */}
+          {}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-700 font-medium mb-2">
@@ -243,7 +243,7 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }) {
             </div>
           </div>
 
-          {/* Category */}
+          {}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Category</label>
             <select
@@ -263,7 +263,7 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }) {
             </select>
           </div>
 
-          {/* Brand & Model */}
+          {}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-700 font-medium mb-2">Brand</label>
@@ -289,7 +289,7 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }) {
             </div>
           </div>
 
-          {/* Images */}
+          {}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Product Images</label>
             <ImageUpload onImageUploaded={handleImageUploaded} />
@@ -318,7 +318,7 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }) {
             )}
           </div>
 
-          {/* Is Visible */}
+          {}
           <div className="flex items-center">
             <input
               type="checkbox"

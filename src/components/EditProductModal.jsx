@@ -19,7 +19,6 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
     model: "standard",
   });
 
-  // Populate form when product changes
   useEffect(() => {
     if (product) {
       setFormData({

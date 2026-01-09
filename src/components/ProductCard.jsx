@@ -12,19 +12,16 @@ export default function ProductCard({
   onAddToCart,
   onClick
 }) {
-  // Get the first image from the array or use default
+
   const productImage = Array.isArray(image) ? image[0] : image;
   
-  // Construct full image URL if it's a relative path
   const imageUrl = productImage && productImage.startsWith('/images') 
     ? `http://localhost:3000${productImage}` 
     : productImage;
-  
-  // Ensure price is a number
+
   const priceNum = typeof price === 'number' ? price : parseFloat(price) || 0;
   const labelledPriceNum = typeof labelledPrice === 'number' ? labelledPrice : parseFloat(labelledPrice) || 0;
-  
-  // Calculate discount percentage if labelledPrice exists
+
   const discount = labelledPriceNum ? Math.round(((labelledPriceNum - priceNum) / labelledPriceNum) * 100) : 0;
   
   return (

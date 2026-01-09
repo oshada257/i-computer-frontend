@@ -63,7 +63,7 @@ export default function OnSaleNow() {
   }
 
   if (saleProducts.length === 0) {
-    return null; // Don't show section if no products on sale
+    return null; 
   }
 
   return (
