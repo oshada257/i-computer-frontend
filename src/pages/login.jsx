@@ -1,5 +1,5 @@
 import { useState } from "react";
-import{ Link,useNavigate, useParams, useLocation  } from "react-router-dom"; 
+import{ Link,useNavigate,  } from "react-router-dom"; 
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
@@ -11,6 +11,13 @@ export default function Login() {
 
     async function login(e){
         e.preventDefault();
+        
+        // Validate empty fields
+        if (!email.trim() || !password.trim()) {
+            toast.error("Please enter both email and password");
+            return;
+        }
+        
         try {
             const response = await axios.post("http://localhost:3000/users/login", {
                 email: email,

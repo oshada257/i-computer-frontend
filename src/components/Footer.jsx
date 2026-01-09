@@ -3,7 +3,7 @@ export default function Footer() {
     <footer id="footer" className="bg-gray-800 text-white py-12 mt-12">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-          {/* Company Info */}
+     
           <div>
             <h3 className="text-xl font-bold mb-4">E-Computer Store</h3>
             <p className="text-gray-300 mb-4">
@@ -15,7 +15,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Contact Us */}
           <div>
             <h3 className="text-xl font-bold mb-4">Contact Us</h3>
             <div className="space-y-3">
@@ -60,7 +59,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Follow Us */}
           <div>
             <h3 className="text-xl font-bold mb-4">Follow Us</h3>
             <div className="flex gap-4">
@@ -109,25 +107,9 @@ export default function Footer() {
                 ></ion-icon>
               </a>
             </div>
-            
-            {/* Newsletter */}
-            <div className="mt-6">
-              <h4 className="text-sm font-semibold mb-2">Subscribe to Newsletter</h4>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="px-3 py-2 rounded-lg bg-gray-700 text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex-1"
-                />
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all text-sm">
-                  Subscribe
-                </button>
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* Bottom Section */}
         <div className="border-t border-gray-700 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">

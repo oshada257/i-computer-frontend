@@ -6,13 +6,27 @@ export default function Admin() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('products');
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [orderSearchQuery, setOrderSearchQuery] = useState('');
 
+    const fetchOrders = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await api.get("/orders", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setOrders(response.data.orders);
+      setFilteredOrders(response.data.orders);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+
   useEffect(() => {
-    // Check if user is logged in and is admin
+  
     const userData = localStorage.getItem("user");
     if (!userData) {
       navigate("/login");
@@ -32,22 +46,9 @@ export default function Admin() {
     setLoading(false);
   }, [navigate]);
 
-  const fetchOrders = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await api.get("/orders", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setOrders(response.data.orders);
-      setFilteredOrders(response.data.orders);
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-    }
-  };
 
-  // Search orders
+
+ 
   const handleOrderSearch = (query) => {
     setOrderSearchQuery(query);
     if (query.trim() === "") {
@@ -64,7 +65,7 @@ export default function Admin() {
     }
   };
 
-  // Update order status
+ 
   const handleUpdateOrderStatus = async (orderId, newStatus) => {
     try {
       const token = localStorage.getItem("token");
@@ -152,13 +153,13 @@ export default function Admin() {
           </div>
         </div>
 
-        {/* Orders Section */}
+       
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold text-gray-800">
               Orders Management ({filteredOrders.length})
             </h2>
-            {/* Search Bar */}
+            
             <div className="flex items-center gap-2">
               <input
                 type="text"

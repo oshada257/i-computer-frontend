@@ -20,7 +20,6 @@ export default function Admin() {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    // Check if user is logged in and is admin
     const userData = localStorage.getItem("user");
     if (!userData) {
       navigate("/login");
@@ -56,7 +55,7 @@ export default function Admin() {
     }
   };
 
-  // Search products
+ 
   const handleSearch = (query) => {
     setSearchQuery(query);
     if (query.trim() === "") {
@@ -72,8 +71,7 @@ export default function Admin() {
       setFilteredProducts(filtered);
     }
   };
-
-  // Delete product
+ 
   const handleDeleteProduct = async (productId) => {
     if (!confirm("Are you sure you want to delete this product?")) {
       return;
@@ -94,13 +92,13 @@ export default function Admin() {
     }
   };
 
-  // Edit product - open modal with product data
+  
   const handleEditProduct = (product) => {
     setEditingProduct(product);
     setShowEditProductModal(true);
   };
 
-  // Toggle product on sale status
+
   const handleToggleSale = async (productId) => {
     try {
       const token = localStorage.getItem("token");
@@ -161,15 +159,15 @@ export default function Admin() {
         </div>
       </div>
 
-      {/* Main Content */}
+      
       <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Stats Cards */}
+     
         <AdminStats products={products} />
 
-        {/* Quick Actions */}
+        
         <QuickActions onAddProduct={() => setShowAddProductModal(true)} />
 
-        {/* Product List */}
+        
         <ProductList
           products={products}
           filteredProducts={filteredProducts}
@@ -181,14 +179,14 @@ export default function Admin() {
         />
       </div>
 
-      {/* Add Product Modal */}
+     
       <AddProductModal
         isOpen={showAddProductModal}
         onClose={() => setShowAddProductModal(false)}
         onSuccess={fetchProducts}
       />
 
-      {/* Edit Product Modal */}
+  
       <EditProductModal
         isOpen={showEditProductModal}
         onClose={() => {

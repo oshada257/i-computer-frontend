@@ -13,8 +13,6 @@ export default function Home() {
   const { addToCart } = useCart();
   const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [showResults, setShowResults] = useState(false);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -106,7 +104,6 @@ export default function Home() {
   const handleBuyNow = (product) => {
     if (!user) {
       toast.error("Please login to purchase products", {
-        icon: "🔒",
         duration: 2000
       });
       setTimeout(() => navigate("/login"), 1500);
@@ -124,7 +121,10 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">E-Computer Store</h1>
+          <div className="flex items-center gap-3">
+            <img src="/logo.png" alt="E Computer Logo" className="h-10 w-10 object-contain rounded-full" />
+            <h1 className="text-2xl font-bold text-gray-800">E-Computer Store</h1>
+          </div>
           <div className="flex items-center gap-8">
             <a
               href="/"

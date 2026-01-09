@@ -133,7 +133,7 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Edit Product</h2>
 
         <div className="space-y-4">
-          {/* Product ID (Read-only) */}
+       
           <div>
             <label className="block text-gray-700 font-medium mb-2">
               Product ID
@@ -146,7 +146,6 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
             />
           </div>
 
-          {/* Product Name */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
               Product Name <span className="text-red-500">*</span>
@@ -162,7 +161,6 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
             />
           </div>
 
-          {/* Description */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
               Description <span className="text-red-500">*</span>
@@ -178,7 +176,6 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
             />
           </div>
 
-          {/* Alternative Names */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Alternative Names</label>
             {formData.altName.map((altName, index) => (
@@ -208,7 +205,6 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
             </button>
           </div>
 
-          {/* Price */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-700 font-medium mb-2">
@@ -241,7 +237,6 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
             </div>
           </div>
 
-          {/* Category */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Category</label>
             <select
@@ -261,7 +256,6 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
             </select>
           </div>
 
-          {/* Brand & Model */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-700 font-medium mb-2">Brand</label>
@@ -287,7 +281,6 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
             </div>
           </div>
 
-          {/* Images */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Product Images</label>
             <ImageUpload onImageUploaded={handleImageUploaded} />
@@ -316,7 +309,6 @@ export default function EditProductModal({ isOpen, onClose, onSuccess, product }
             )}
           </div>
 
-          {/* Is Visible */}
           <div className="flex items-center">
             <input
               type="checkbox"

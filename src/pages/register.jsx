@@ -30,10 +30,10 @@ export default function Rejister() {
             console.log(response.data);
             toast.success("Registration successful! Redirecting to login...");
             
-            // Redirect to login page after successful registration
+            
             setTimeout(() => {
                 navigate("/login");
-            }, 1500); // Wait 1.5 seconds to show success message
+            }, 1500); 
         } catch (error) {
             console.error("There was an error!", error);
             toast.error("Registration failed. Please try again.");

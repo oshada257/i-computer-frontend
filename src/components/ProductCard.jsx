@@ -7,7 +7,6 @@ export default function ProductCard({
   image, 
   category,
   brand,
-  model,
   onBuyNow,
   onAddToCart,
   onClick

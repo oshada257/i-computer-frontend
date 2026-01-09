@@ -159,7 +159,7 @@ export default function Checkout() {
         }
       });
 
-      // Clear cart if this was a cart checkout
+      
       if (isCartCheckout) {
         clearCart();
       }
@@ -185,7 +185,7 @@ export default function Checkout() {
 
   const totals = calculateTotals();
 
-  // Helper function to get image URL
+
   const getImageUrl = (image) => {
     if (!image || (Array.isArray(image) && image.length === 0)) {
       return '/images/default-product.png';
@@ -219,7 +219,6 @@ export default function Checkout() {
         </div>
       </nav>
 
-      {/* Checkout Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         <button
           onClick={() => navigate(isCartCheckout ? "/cart" : "/")}
@@ -280,7 +279,6 @@ export default function Checkout() {
               </div>
             </div>
 
-            {/* Shipping Address */}
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-xl font-semibold text-gray-800 mb-4">Shipping Address</h2>
               <div className="space-y-4">
@@ -339,7 +337,7 @@ export default function Checkout() {
               </div>
             </div>
 
-            {/* Payment Method */}
+           
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-xl font-semibold text-gray-800 mb-4">Payment Method</h2>
               <div className="space-y-3">
@@ -369,11 +367,11 @@ export default function Checkout() {
             </div>
           </div>
 
-          {/* Order Summary */}
+          
           <div className="bg-white rounded-lg shadow-md p-6 h-fit">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Order Summary</h2>
             
-            {/* Product Details */}
+           
             <div className="space-y-4 mb-6 max-h-64 overflow-y-auto">
               {orderItems.map((item, index) => (
                 <div key={index} className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg">
@@ -391,7 +389,7 @@ export default function Checkout() {
               ))}
             </div>
 
-            {/* Price Breakdown */}
+          
             <div className="space-y-3 border-t pt-4">
               <div className="flex justify-between">
                 <span>Subtotal:</span>
