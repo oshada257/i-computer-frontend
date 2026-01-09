@@ -46,9 +46,9 @@ export default function Rejister() {
 
     return (
 
-        <div className="min-h-screen w-full flex items-center justify-center bg-[url('/public/registerBg.jpg')] bg-cover bg-center p-4">
-            <div className="backdrop-blur-xl bg-white/10 border border-white/20 w-full max-w-md p-8 rounded-3xl shadow-2xl">
-                <h2 className="text-3xl font-bold text-white text-center mb-8">Register</h2>
+        <div className="min-h-screen w-full flex items-center justify-center bg-[#1e1e27] p-4">
+            <div className="bg-white w-full max-w-md p-8 rounded-lg shadow-2xl">
+                <h2 className="text-3xl font-bold text-[#1e1e27] text-center mb-8">Create Account</h2>
 
                 <form className="grid grid-cols-1 gap-4" onSubmit={handleRegister}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -58,7 +58,7 @@ export default function Rejister() {
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
                             required
-                            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                            className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-[#1e1e27] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D10024] focus:border-transparent" 
                         />
                         <input 
                             type="text" 
@@ -66,7 +66,7 @@ export default function Rejister() {
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                             required
-                            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                            className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-[#1e1e27] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D10024] focus:border-transparent" 
                         />
                     </div>
                     <input 
@@ -75,7 +75,7 @@ export default function Rejister() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                        className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-[#1e1e27] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D10024] focus:border-transparent" 
                     />
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -85,7 +85,7 @@ export default function Rejister() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                            className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-[#1e1e27] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D10024] focus:border-transparent" 
                         />
                         <input 
                             type="password" 
@@ -93,17 +93,17 @@ export default function Rejister() {
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             required
-                            className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                            className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-[#1e1e27] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D10024] focus:border-transparent" 
                         />
                     </div>
 
-                    <button type="submit" className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition-all mt-2">
+                    <button type="submit" className="w-full bg-[#D10024] text-white font-bold py-3 rounded-lg hover:bg-[#a8001d] transition-all mt-2">
                         Register Now
                     </button>
                 </form>
 
-                <p className="text-white/70 text-sm text-center mt-6">
-                    Already have an account? <a href="/login" className="text-white font-bold hover:underline">Login</a>
+                <p className="text-gray-600 text-sm text-center mt-6">
+                    Already have an account? <a href="/login" className="text-[#D10024] font-bold hover:underline">Login</a>
                 </p>
             </div>
         </div>

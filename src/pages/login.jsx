@@ -55,59 +55,50 @@ export default function Login() {
     }
     
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-[url('public/loginBG.jpg')] bg-cover bg-center p-4">
-        <div className="backdrop-blur-md bg-white/10 border border-white/20 w-full max-w-sm h-auto p-8 rounded-3xl shadow-2xl">
+      <div className="min-h-screen w-full flex items-center justify-center bg-[#1e1e27] p-4">
+        <div className="bg-white w-full max-w-sm h-auto p-8 rounded-lg shadow-2xl">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-white tracking-tight">
-              Welcome{" "}
+            <h2 className="text-3xl font-bold text-[#1e1e27] tracking-tight">
+              Welcome Back
             </h2>
-            <p className="text-white/65 text-sm mt-2">
+            <p className="text-gray-500 text-sm mt-2">
               Please enter your details
             </p>
           </div>
 
           <form className="space-y-6" onSubmit={login}>
             <div className="flex flex-col gap-2">
-              <label className="text-white text-sm ml-1">Email Address</label>
+              <label className="text-[#1e1e27] text-sm ml-1 font-medium">Email Address</label>
               <input
                 type="email"
                 placeholder="email@example.com"
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
+                className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-[#1e1e27] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D10024] focus:border-transparent transition-all"
               />
             </div>
 
             <div className="flex flex-col gap-2">
-              <label className="text-white text-sm ml-1">Password</label>
+              <label className="text-[#1e1e27] text-sm ml-1 font-medium">Password</label>
               <input
                 type="password"
                 placeholder="••••••••"
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
+                className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-[#1e1e27] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D10024] focus:border-transparent transition-all"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition-all mt-2"
+              className="w-full bg-[#D10024] text-white font-bold py-3 rounded-lg hover:bg-[#a8001d] transition-all mt-2"
             >
               Sign In
             </button>
 
-            <div className="text-center mt-2">
-              <a
-                href="#"
-                className="text-white/60 text-sm hover:text-white transition-colors"
-              >
-                Forgot password?
-              </a>
-            </div>
-
-            <p className="text-white/70 text-sm text-center mt-6">
+            <p className="text-gray-600 text-sm text-center mt-6">
               Don't have an account?
               <a
                 href="/register"
-                className="text-white font-bold hover:underline ml-1"
+                className="text-[#D10024] font-bold hover:underline ml-1"
               >
                 Register here
               </a>

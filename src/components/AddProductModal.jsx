@@ -254,12 +254,11 @@ export default function AddProductModal({ isOpen, onClose, onSuccess }) {
             >
               <option value="others">Others</option>
               <option value="laptops">Laptops</option>
-              <option value="mice">Mice</option>
+              <option value="mouse">Mouse</option>
               <option value="keyboards">Keyboards</option>
               <option value="monitors">Monitors</option>
               <option value="accessories">Accessories</option>
               <option value="desktops">Desktops</option>
-              <option value="components">Components</option>
             </select>
           </div>
 

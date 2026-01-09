@@ -26,7 +26,7 @@ export default function ProductCard({
   return (
     <div 
       onClick={() => onClick && onClick(productId)}
-      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow flex flex-col h-full cursor-pointer"
+      className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1 flex flex-col h-full cursor-pointer border border-gray-100"
     >
       <div className="relative">
         <img 
@@ -35,19 +35,19 @@ export default function ProductCard({
           className="w-full h-48 object-cover"
         />
         {discount > 0 && (
-          <span className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-semibold">
+          <span className="absolute top-2 right-2 bg-[#D10024] text-white px-2 py-1 rounded-md text-sm font-semibold">
             -{discount}%
           </span>
         )}
         {category && (
-          <span className="absolute top-2 left-2 bg-gray-800 text-white px-2 py-1 rounded-md text-xs">
+          <span className="absolute top-2 left-2 bg-[#1e1e27] text-white px-2 py-1 rounded-md text-xs">
             {category}
           </span>
         )}
       </div>
       
       <div className="p-4 flex flex-col grow">
-        <h3 className="text-lg font-semibold text-gray-800 mb-1 h-14 line-clamp-2">
+        <h3 className="text-lg font-semibold text-[#1e1e27] mb-1 h-14 line-clamp-2">
           {name}
         </h3>
         
@@ -66,7 +66,7 @@ export default function ProductCard({
         </div>
         
         <div className="flex items-center gap-2 mb-4 mt-auto">
-          <p className="text-2xl font-bold text-blue-600">
+          <p className="text-2xl font-bold text-[#D10024]">
             Rs.{priceNum.toFixed(2)}
           </p>
           {labelledPriceNum && labelledPriceNum > priceNum && (
@@ -82,7 +82,7 @@ export default function ProductCard({
               e.stopPropagation();
               onAddToCart && onAddToCart(productId);
             }}
-            className="flex-1 bg-gray-100 text-gray-800 py-2 rounded-lg hover:bg-gray-200 transition-all border border-gray-300"
+            className="flex-1 bg-[#1e1e27] text-white py-2 rounded-lg hover:bg-[#15161d] transition-all"
           >
             Add to Cart
           </button>
@@ -91,7 +91,7 @@ export default function ProductCard({
               e.stopPropagation();
               onBuyNow && onBuyNow(productId);
             }}
-            className="flex-1 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-all"
+            className="flex-1 bg-[#D10024] text-white py-2 rounded-lg hover:bg-[#a8001d] transition-all"
           >
             Buy Now
           </button>
