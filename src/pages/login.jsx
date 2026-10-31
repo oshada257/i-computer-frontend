@@ -46,11 +46,15 @@ export default function Login() {
             }
         } catch (error) {
             console.error("There was an error!", error);
-            toast.error(
-                error?.code === "ERR_NETWORK"
-                    ? "Cannot reach the server. Please check if the API is running."
-                    : "Login failed. Please check your credentials."
-            );
+            if (error?.code === "ERR_NETWORK") {
+                toast.error("Cannot reach the server. Please check if the API is running.");
+            } else if (error?.response?.status === 404) {
+                toast.error("User not registered. Please create an account first.");
+            } else if (error?.response?.data?.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Login failed. Please check your credentials.");
+            }
         }
     }
     

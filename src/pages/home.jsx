@@ -43,7 +43,7 @@ export default function Home() {
     if (selectedCategory !== "all") {
       filtered = filtered.filter(
         (product) =>
-          product.category.toLowerCase() === selectedCategory.toLowerCase()
+          product.category && product.category.toLowerCase() === selectedCategory.toLowerCase()
       );
     }
 
@@ -51,11 +51,11 @@ export default function Home() {
       const query = searchQuery.toLowerCase().trim();
       filtered = filtered.filter(
         (product) =>
-          product.name.toLowerCase().includes(query) ||
-          product.description.toLowerCase().includes(query) ||
-          product.category.toLowerCase().includes(query) ||
-          product.brand.toLowerCase().includes(query) ||
-          product.model.toLowerCase().includes(query)
+          (product.name && product.name.toLowerCase().includes(query)) ||
+          (product.description && product.description.toLowerCase().includes(query)) ||
+          (product.category && product.category.toLowerCase().includes(query)) ||
+          (product.brand && product.brand.toLowerCase().includes(query)) ||
+          (product.model && product.model.toLowerCase().includes(query))
       );
     }
 

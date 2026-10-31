@@ -1,3 +1,5 @@
+import { getImageUrl } from "../api/client";
+
 export default function ProductList({ 
   products, 
   filteredProducts, 
@@ -75,9 +77,7 @@ export default function ProductList({
               <tr key={product._id || product.productId} className="border-b hover:bg-gray-50">
                 <td className="py-3 px-4">
                   <img
-                    src={product.image && product.image[0] ? 
-                      (product.image[0].startsWith('/images') ? `http://localhost:3000${product.image[0]}` : product.image[0]) 
-                      : '/images/default-product.png'}
+                    src={getImageUrl(product.image)}
                     alt={product.name}
                     className="w-12 h-12 object-cover rounded"
                   />

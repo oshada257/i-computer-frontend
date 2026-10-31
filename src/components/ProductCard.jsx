@@ -1,3 +1,5 @@
+import { getImageUrl } from "../api/client";
+
 export default function ProductCard({ 
   productId,
   name, 
@@ -12,11 +14,8 @@ export default function ProductCard({
   onClick
 }) {
 
-  const productImage = Array.isArray(image) ? image[0] : image;
-  
-  const imageUrl = productImage && productImage.startsWith('/images') 
-    ? `http://localhost:3000${productImage}` 
-    : productImage;
+  const imageUrl = getImageUrl(image);
+
 
   const priceNum = typeof price === 'number' ? price : parseFloat(price) || 0;
   const labelledPriceNum = typeof labelledPrice === 'number' ? labelledPrice : parseFloat(labelledPrice) || 0;
